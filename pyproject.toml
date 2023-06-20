@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "twisted-examples"
+version = "0.1.0"
+description = ""
+authors = ["stanislav <stanislav.matveew@yandex.ru>"]
+readme = "README.md"
+packages = [{include = "twisted_examples"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+twisted = "^22.10.0"
+loguru = "^0.7.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
