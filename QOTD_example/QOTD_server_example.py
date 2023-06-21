@@ -1,5 +1,6 @@
 from loguru import logger
 from twisted.internet import reactor
+from twisted.internet.endpoints import TCP4ServerEndpoint
 from twisted.internet.protocol import Protocol, Factory
 
 
@@ -21,9 +22,13 @@ class QOTD(Protocol):
 
 
 class QOTDFactory(Factory):
+
+    numProtocols = 0
+
     def buildProtocol(self, addr):
-        return QOTD()
+        return QOTD(self)
 
 
-reactor.listenTCP(8080, QOTDFactory())
+endpoint = TCP4ServerEndpoint(reactor, 8080)
+endpoint.listen(QOTDFactory())
 reactor.run()

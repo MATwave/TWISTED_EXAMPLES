@@ -1,5 +1,6 @@
 from loguru import logger
 from twisted.internet import reactor
+from twisted.internet.endpoints import TCP4ServerEndpoint
 from twisted.internet.protocol import Protocol, Factory
 
 
@@ -20,9 +21,13 @@ class Echo(Protocol):
 
 
 class EchoFactory(Factory):
+
+    numProtocols = 0
+
     def buildProtocol(self, addr):
-        return Echo()
+        return Echo(self)
 
 
-reactor.listenTCP(8080, EchoFactory())
+endpoint = TCP4ServerEndpoint(reactor, 8080)
+endpoint.listen(EchoFactory())
 reactor.run()
